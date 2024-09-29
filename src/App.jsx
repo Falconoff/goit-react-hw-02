@@ -11,14 +11,13 @@ function App() {
   const [feedbacks, setFeedbacks] = useState(() => {
     const savedFeedbacksObj = window.localStorage.getItem('saved-feedbacks');
 
-    if (savedFeedbacksObj !== null) {
-      return JSON.parse(savedFeedbacksObj);
-    }
-    return {
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    };
+    return (
+      JSON.parse(savedFeedbacksObj) ?? {
+        good: 0,
+        neutral: 0,
+        bad: 0,
+      }
+    );
   });
 
   useEffect(() => {
