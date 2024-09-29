@@ -1,47 +1,10 @@
-// import React from 'react'
+import css from './Options.module.css';
 
-const Options = ({
-  feedbacks,
-  updateFeedback,
-  totalFeedback,
-  resetFeedbacks,
-}) => {
-  console.log('feedbacks: ', feedbacks);
-  console.log('totalFeedback: ', totalFeedback);
-
-  // const feedbacksArr = Object.keys(feedbacks);
-  // console.log(feedbacksArr);
-
-  // const feedbackBtn = feedbacksArr.map(fbType => {
-  //   console.log('fbType: ', fbType);
-  //   return (
-  //     <button
-  //       type="button"
-  //       key={fbType}
-  //       onClick={() => {
-  //         updateFeedback({ fbType });
-  //       }}
-  //     >
-  //       {fbType.toUpperCase()}
-  //     </button>
-  //   );
-  // });
-
-  // console.log('feedbackBtn: ', feedbackBtn);
-
+const Options = ({ updateFeedback, totalFeedback, resetFeedbacks }) => {
   return (
-    <div>
-      {/* {feedbackBtn} */}
-      {/* {feedbacksArr.map(item =>{
-        <button
-          type="button"
-          onClick={() => {
-            updateFeedback({item});
-          }}
-        ></button>
-      }}; */}
-
+    <div className={css.wrapper}>
       <button
+        className={css.btn}
         type="button"
         onClick={() => {
           updateFeedback('good');
@@ -50,6 +13,7 @@ const Options = ({
         Good
       </button>
       <button
+        className={css.btn}
         type="button"
         onClick={() => {
           updateFeedback('neutral');
@@ -58,6 +22,7 @@ const Options = ({
         Neutral
       </button>
       <button
+        className={css.btn}
         type="button"
         onClick={() => {
           updateFeedback('bad');
@@ -66,15 +31,17 @@ const Options = ({
         Bad
       </button>
 
-      <button
-        type="button"
-        onClick={() => {
-          resetFeedbacks();
-        }}
-      >
-        Reset
-      </button>
-      {/* {totalFeedback > 0} */}
+      {totalFeedback > 0 && (
+        <button
+          className={css.btn}
+          type="button"
+          onClick={() => {
+            resetFeedbacks();
+          }}
+        >
+          Reset
+        </button>
+      )}
     </div>
   );
 };

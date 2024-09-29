@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Description from './components/Description/Description';
 import Options from './components/Options/Options';
@@ -8,11 +8,22 @@ import Notification from './components/Notification/Notification';
 import './App.css';
 
 function App() {
-  const [feedbacks, setFeedbacks] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [feedbacks, setFeedbacks] = useState(() => {
+    const savedFeedbacksObj = window.localStorage.getItem('saved-feedbacks');
+
+    if (savedFeedbacksObj !== null) {
+      return JSON.parse(savedFeedbacksObj);
+    }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
+
+  useEffect(() => {
+    window.localStorage.setItem('saved-feedbacks', JSON.stringify(feedbacks));
+  }, [feedbacks]);
 
   const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
 
@@ -24,11 +35,6 @@ function App() {
   }
 
   function resetFeedbacks() {
-    // for (const key in feedbacks) {
-    //   setFeedbacks({
-    //     [key]: 0,
-    //   });
-    // }
     setFeedbacks({
       good: 0,
       neutral: 0,
@@ -41,18 +47,13 @@ function App() {
       <Description />
 
       <Options
-        feedbacks={feedbacks}
         updateFeedback={updateFeedback}
         totalFeedback={totalFeedback}
         resetFeedbacks={resetFeedbacks}
       />
 
-      {/* {totalFeedback > 0 && <Feedback {...feedbacks} />}
-
-      {totalFeedback === 0 && <Notification text={'No feedback yet'} />} */}
-
       {totalFeedback > 0 ? (
-        <Feedback {...feedbacks} />
+        <Feedback {...feedbacks} total={totalFeedback} />
       ) : (
         <Notification text={'No feedback yet'} />
       )}
