@@ -25,6 +25,7 @@ function App() {
   }, [feedbacks]);
 
   const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
+  const positivePercent = Math.round((feedbacks.good / totalFeedback) * 100);
 
   function updateFeedback(feedbackType) {
     setFeedbacks({
@@ -52,7 +53,11 @@ function App() {
       />
 
       {totalFeedback > 0 ? (
-        <Feedback {...feedbacks} total={totalFeedback} />
+        <Feedback
+          {...feedbacks}
+          total={totalFeedback}
+          positivePercent={positivePercent}
+        />
       ) : (
         <Notification text={'No feedback yet'} />
       )}
